@@ -1,0 +1,14 @@
+name = "market-price-bot"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[triggers]
+crons = ["*/30 * * * *"]
+
+[vars]
+TELEGRAM_BOT_TOKEN = "inter youre bot token"
+TELEGRAM_CHANNEL = "channel id"
+API_KEY = "api key for https://brsapi.ir" 
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = true
