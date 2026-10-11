@@ -231,6 +231,36 @@ export default {
 
   // تریگر دستی از طریق HTTP
   async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    // حالت debug: فقط داده API رو نشون بده بدون ارسال به تلگرام
+    // مثال: https://your-worker.workers.dev/?debug=1
+    if (url.searchParams.get('debug') === '1') {
+      try {
+        const apiUrl = 'https://sarfe.erfjab.com/api/prices';
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const message = formatMarketMessage(data);
+        const info = {
+          status: 'debug mode - message NOT sent to Telegram',
+          bot_token_set: !!env.TELEGRAM_BOT_TOKEN,
+          channel_set: !!env.TELEGRAM_CHANNEL,
+          channel_value: env.TELEGRAM_CHANNEL,
+          api_ok: response.ok,
+          preview_message: message,
+        };
+        return new Response(JSON.stringify(info, null, 2), {
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
+    // حالت عادی: fetch و send به تلگرام
     try {
       await fetchAndSend(env);
       return new Response('Message sent successfully!', {
