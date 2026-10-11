@@ -1,12 +1,5 @@
 // API: https://sarfe.erfjab.com/api/prices
 
-function isWithinWorkingHours() {
-  const now = new Date();
-  const tehranTime = new Date(now.getTime() + (3.5 * 60 * 60 * 1000));
-  const hour = tehranTime.getUTCHours();
-  return hour >= 10 && hour < 17;
-}
-
 function getTehranTime() {
   const now = new Date();
   const tehran = new Date(now.getTime() + (3.5 * 60 * 60 * 1000));
@@ -80,8 +73,6 @@ function formatMarketMessage(data) {
     if (price == null) continue;
     message += `${item.emoji} ${item.name}: ${formatNumber(price)} ${item.unit}\n`;
   }
-  message += `⏰بروزرسانی: ${now}\n`;
-  message += "\n";
 
   // ─── ارزهای خارجی ───
   message += "ارزهای خارجی:\n";
@@ -107,8 +98,6 @@ function formatMarketMessage(data) {
     if (price == null) continue;
     message += `${item.emoji} ${item.name}: ${formatNumber(price)} تومان\n`;
   }
-  message += `⏰بروزرسانی: ${now}\n`;
-  message += "\n";
 
   // ─── ارزهای دیجیتال ───
   message += "ارزهای دیجیتال:\n";
@@ -127,8 +116,6 @@ function formatMarketMessage(data) {
     if (usdt == null) continue;
     message += `${item.emoji} ${item.name}: ${formatNumber(usdt)} دلار\n`;
   }
-  message += `⏰بروزرسانی: ${now}\n`;
-  message += "\n";
 
   message += `📢 @alan_chandeh`;
   return message;
@@ -168,10 +155,6 @@ async function fetchAndSend(env) {
 export default {
   async scheduled(event, env, ctx) {
     try {
-      if (!isWithinWorkingHours()) {
-        console.log('Outside working hours, skipping update');
-        return;
-      }
       await fetchAndSend(env);
       console.log('Market prices updated successfully');
     } catch (error) {
