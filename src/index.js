@@ -61,7 +61,7 @@ function formatMarketMessage(data) {
 
   const goldItems = [
     { key: 'gol18',    emoji: '💫', name: 'طلای ۱۸ عیار',     unit: 'تومان' },
-    { key: 'ounce',    emoji: '🌟', name: 'انس جهانی طلا',    unit: 'تومان' },
+    { key: 'ounce',    emoji: '🌟', name: 'انس جهانی طلا',    unit: 'دلار' },
     { key: 'emami1',   emoji: '🎖️', name: 'سکه امامی',        unit: 'تومان' },
     { key: 'azadi1',   emoji: '🏆', name: 'سکه بهار آزادی',   unit: 'تومان' },
     { key: 'azadi1_2', emoji: '🥈', name: 'نیم سکه',          unit: 'تومان' },
